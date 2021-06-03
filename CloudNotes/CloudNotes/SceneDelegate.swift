@@ -16,11 +16,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: windowScene)
-        let mainViewController = UISplitViewController()
-        let memoListViewController = UINavigationController(rootViewController: MemoListViewController())
-        let detailViewController = UINavigationController(rootViewController: DetailViewController())
-            
-        mainViewController.viewControllers = [memoListViewController, detailViewController]
+        let mainViewController = MemoSplitViewController(style: .doubleColumn)
+        //mainViewController.preferredDisplayMode = .oneBesideSecondary
+        
+//        let splitView = UISplitViewController(style: .doubleColumn)
+//        splitView.preferredDisplayMode = .oneBesideSecondary
+//        splitView.presentsWithGesture = false
+//
+//        mainViewController.setViewController(MemoListViewController(), for: .primary)
+//        mainViewController.setViewController(DetailViewController(), for: .secondary)
+        
+
+//        memoListViewController.setNavigationBarHidden(false, animated: true)
+//        let backBarButtonItem = UIBarButtonItem(title: "back", style: .plain, target: nil, action: nil)
+//        detailViewController.navigationItem.backBarButtonItem = backBarButtonItem
         
         window?.backgroundColor = .systemBackground
         window?.rootViewController = mainViewController

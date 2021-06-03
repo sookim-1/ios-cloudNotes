@@ -11,16 +11,16 @@ import UIKit
 class MemoListViewController: UIViewController {
     let myTableView = UITableView()
     let decoder = JSONDecoder()
-    let dateFormatter = DateFormatter()
-    let items: [String] = ["abc", "def", "ghi"]
+    weak var delegate: ControllerDelegate?
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.myTableView.dataSource = self
         self.myTableView.delegate = self
         
-        self.myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "TableViewCell")
+        self.myTableView.register(MemoListCell.self, forCellReuseIdentifier: MemoListCell.identifier)
         self.view.addSubview(self.myTableView)
 
         self.myTableView.translatesAutoresizingMaskIntoConstraints = false
@@ -53,7 +53,20 @@ class MemoListViewController: UIViewController {
 }
 
 extension MemoListViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //navigationController?.pushViewController(DetailViewController(), animated: true)
+        //self.navigationController?.pushToViewController(DetailViewController(), animated: true)
+        //self.splitViewController?.showDetailViewController(DetailViewController(), sender: nil)
+        let memoData = decodeMemoData()!
+        //DetailViewController.receiveData = memoData[indexPath.row]
+        //navigationController?.showDetailViewController(DetailViewController(), sender: sendData)
+        //self.showDetailViewController(DetailViewController(), sender: self)
+        //let cellLabel = tableView.cellForRow(at: indexPath)?.textLabel?.text
+        
+        myTableView.deselectRow(at: indexPath, animated: true)
+        delegate?.didTapMenuItem(at: indexPath.row)
+        //splitViewController?.show(DetailViewController(), sender: nil)
+    }
 }
 
 extension MemoListViewController: UITableViewDataSource {
@@ -65,12 +78,13 @@ extension MemoListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: MemoListCell.identifier, for: indexPath) as! MemoListCell
 
         let memoData = decodeMemoData()!
+        cell.memoTitle.text = memoData[indexPath.row].title
+        cell.memoDateCreate.text = memoData[indexPath.row].lastModifiedDate
+        cell.memoPreview.text = memoData[indexPath.row].body
         
-        cell.textLabel?.text = memoData[indexPath.row].title
-
         return cell
     }
     
