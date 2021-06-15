@@ -9,6 +9,8 @@ import UIKit
 
 class MemoListViewController: UITableViewController {
     
+    var delegate: SendDataDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,6 +31,7 @@ class MemoListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        delegate?.sendData(data: DataManager.shared.memoList[indexPath.row], index: indexPath.row)
         splitViewController?.show(.secondary)
     }
     
