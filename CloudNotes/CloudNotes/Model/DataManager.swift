@@ -39,6 +39,13 @@ class DataManager {
         fetchData()
     }
     
+    func deleteData(index: Int) {
+        let memoToRemove = memoList[index]
+        mainContext.delete(memoToRemove)
+        saveContext()
+        fetchData()
+    }
+    
     // MARK: - Core Data stack
 
     lazy var persistentContainer: NSPersistentCloudKitContainer = {
