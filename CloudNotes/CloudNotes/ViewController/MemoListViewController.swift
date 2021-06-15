@@ -12,7 +12,12 @@ class MemoListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNote))
         self.tableView.register(MemoListCell.self, forCellReuseIdentifier: MemoListCell.identifier)
+    }
+    
+    @objc func addNote() {
+        
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
