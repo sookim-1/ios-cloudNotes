@@ -41,4 +41,36 @@ class MemoListViewController: UITableViewController {
         
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { (action, view, completionHandler ) in
+            
+            let defaultAction = UIAlertAction(title: "삭제", style: .destructive) { (action) in
+                DataManager.shared.deleteData(index: indexPath.row)
+            }
+            let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+            let alert = UIAlertController(title: "진짜요?", message: "정말로 삭제하시겠어요?", preferredStyle: .alert)
+            alert.addAction(defaultAction)
+            alert.addAction(cancelAction)
+
+            self.present(alert, animated: true)
+            completionHandler(true)
+        }
+        
+        let shareAction = UIContextualAction(style: .normal, title: "공유") { (action, view, completionHandler ) in
+            guard let sendText = DataManager.shared.memoList[indexPath.row].body else { return }
+            
+            let shareSheetViewController = UIActivityViewController(activityItems: [sendText], applicationActivities: nil)
+        
+            if let popOverController = shareSheetViewController.popoverPresentationController {
+                popOverController.sourceView = view
+            }
+            
+            self.present(shareSheetViewController, animated: true)
+            completionHandler(true)
+        }
+        
+        return UISwipeActionsConfiguration(actions: [deleteAction, shareAction])
+    }
+    
 }
