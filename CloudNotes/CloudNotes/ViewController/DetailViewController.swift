@@ -19,8 +19,12 @@ class DetailViewController: UIViewController, SendDataDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), style: .plain, target: self, action: #selector(editMemo))
         self.view.addSubview(memoDetailTextView)
         setTextViewConstraint()
+    }
+    
+    @objc func editMemo() {
     }
     
     private func setTextViewConstraint() {
