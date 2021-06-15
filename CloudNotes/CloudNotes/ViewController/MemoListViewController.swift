@@ -16,8 +16,16 @@ class MemoListViewController: UITableViewController {
         self.tableView.register(MemoListCell.self, forCellReuseIdentifier: MemoListCell.identifier)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        DataManager.shared.fetchData()
+    }
+    
     @objc func addNote() {
-        
+        DataManager.shared.createData()
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return DataManager.shared.memoList.count
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -25,7 +33,8 @@ class MemoListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: MemoListCell.identifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: MemoListCell.identifier, for: indexPath) as! MemoListCell
+        cell.setCellData(currentMemoData: DataManager.shared.memoList[indexPath.row])
         
         return cell
     }
