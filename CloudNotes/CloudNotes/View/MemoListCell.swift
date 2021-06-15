@@ -9,4 +9,6 @@ import UIKit
 
 class MemoListCell: UITableViewCell {
     
+    static let identifier = "memoListCell"
+    
 }
