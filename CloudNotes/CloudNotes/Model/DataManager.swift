@@ -16,36 +16,6 @@ class DataManager {
         return persistentContainer.viewContext
     }
     
-    var memoList = [Memo]()
-
-    func fetchData() {
-        let request: NSFetchRequest<Memo> = Memo.fetchRequest()
-        
-        do {
-            memoList = try mainContext.fetch(request)
-            MemoListViewController().tableView.reloadData()
-        } catch {
-            print("데이터 불러오기 실패")
-        }
-    }
-    
-    func createData() {
-        let newMemo = Memo(context: mainContext)
-        newMemo.title = "새로운 메모"
-        newMemo.body = "추가 텍스트 없음"
-        newMemo.lastModifiedDate = Date()
-        
-        saveContext()
-        fetchData()
-    }
-    
-    func deleteData(index: Int) {
-        let memoToRemove = memoList[index]
-        mainContext.delete(memoToRemove)
-        saveContext()
-        fetchData()
-    }
-    
     // MARK: - Core Data stack
 
     lazy var persistentContainer: NSPersistentCloudKitContainer = {
