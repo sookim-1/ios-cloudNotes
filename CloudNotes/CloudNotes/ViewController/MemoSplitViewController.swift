@@ -20,7 +20,7 @@ class MemoSplitViewController: UISplitViewController, UISplitViewControllerDeleg
         let memoListViewController = MemoListViewController()
         let detailViewController = DetailViewController()
         memoListViewController.title = "메모"
-        memoListViewController.delegate = detailViewController
+        detailViewController.delegate = memoListViewController
         self.setViewController(memoListViewController, for: .primary)
         self.setViewController(detailViewController, for: .secondary)
         self.preferredDisplayMode = .oneBesideSecondary

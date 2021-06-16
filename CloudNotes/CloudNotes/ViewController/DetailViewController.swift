@@ -7,7 +7,9 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, SendDataDelegate {
+class DetailViewController: UIViewController {
+    var delegate: SendDataDelegate?
+    
     var memoDetailTextView: UITextView = {
         let view = UITextView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -21,6 +23,7 @@ class DetailViewController: UIViewController, SendDataDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        memoDetailTextView.delegate = self
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), style: .plain, target: self, action: #selector(editMemo))
         self.view.addSubview(memoDetailTextView)
         setTextViewConstraint()
@@ -39,9 +42,15 @@ class DetailViewController: UIViewController, SendDataDelegate {
     }
     
     func sendData(data: Memo, index: Int) {
-        self.memoDetailTextView.text = "\(data.title!) + \(data.body!) + \(index)"
+        self.memoDetailTextView.text = "\(data.title!) + \(data.body!) + \(data.lastModifiedDate!) + \(index)"
     }
     
+}
+
+extension DetailViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        delegate?.sendData(data: memoDetailTextView.text)
+    }
 }
 
 // MARK: - DetailViewController Alert 

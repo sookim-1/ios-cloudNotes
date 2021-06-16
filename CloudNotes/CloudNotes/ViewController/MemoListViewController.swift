@@ -54,7 +54,8 @@ class MemoListViewController: UITableViewController, NSFetchedResultsControllerD
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let sendCell = fetchResultController.fetchedObjects else { return }
         
-        delegate?.sendData(data: sendCell[indexPath.row], index: indexPath.row)
+      //  delegate?.sendData(data: sendCell[indexPath.row], index: indexPath.row)
+        
         splitViewController?.show(.secondary)
     }
     
@@ -107,5 +108,12 @@ class MemoListViewController: UITableViewController, NSFetchedResultsControllerD
         default:
             print("에러")
         }
+    }
+}
+
+extension MemoListViewController: SendDataDelegate {
+    func sendData(data: String) {
+   //     let data = fetchResultController.object(at: IndexPath())
+        print("\(data) " )
     }
 }

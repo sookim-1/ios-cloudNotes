@@ -9,6 +9,6 @@ import Foundation
 
 protocol SendDataDelegate {
 
-    func sendData(data: Memo, index: Int)
+    func sendData(data: String)
 
 }
